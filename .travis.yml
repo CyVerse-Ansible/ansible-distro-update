@@ -45,7 +45,8 @@ script:
 
   # Run updates manually and confirm that none are applied (i.e. system has been brought up-to-date)
   - >
-    sudo docker exec test_dummy eval ${UPDATE_CMD} | grep -q "${NO_UPDATES_MSG}"
+    sudo docker exec test_dummy eval ${UPDATE_CMD}
+    | grep -q "${NO_UPDATES_MSG}"
     && (echo 'Test for no updates needed: pass' && exit 0)
     || (echo 'Test for no updates needed: fail' && exit 1)
 
