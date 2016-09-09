@@ -4,11 +4,11 @@
   apt:
     update_cache: yes
     upgrade: dist
-  when: ansible_pkg_mgr == apt
+  when: ansible_pkg_mgr == "apt"
 
 - name: Yum
   yum:
     update_cache: yes
-    name: *
+    name: "*"
     state: latest
-  when: ansible_pkg_mgr == yum
+  when: ansible_pkg_mgr == "yum"
