@@ -52,7 +52,7 @@ script:
   - "sudo cat output"
 
   - >
-    sudo cat output | grep -q "$NO_UPDATES_MSG"
+    sudo grep -q "$NO_UPDATES_MSG" output
     && (echo 'Test for no updates needed: pass' && exit 0)
     || (echo 'Test for no updates needed: fail' && exit 1)
 
