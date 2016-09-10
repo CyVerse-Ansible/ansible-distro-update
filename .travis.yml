@@ -49,10 +49,12 @@ script:
 
   # Run updates manually and confirm that none are applied (i.e. system has been brought up-to-date)
   - "sudo docker exec test_dummy bash -c \"${UPDATE_CMD}\" > output"
-  - "sudo cat output"
+  - "sudo chmod a+r output"
+  - "cat output"
+  - "grep -q \"$NO_UPDATES_MSG\" output"
 
   - >
-    sudo grep -q "$NO_UPDATES_MSG" output
+    grep -q "$NO_UPDATES_MSG" output
     && (echo 'Test for no updates needed: pass' && exit 0)
     || (echo 'Test for no updates needed: fail' && exit 1)
 
