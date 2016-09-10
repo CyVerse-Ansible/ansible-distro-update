@@ -11,7 +11,7 @@ services:
 env:
   - distribution: centos
     version: 7
-    PRE_CMD: "setenforce 0"
+    PRE_CMD: "'setenforce 0'"
     UPDATE_CMD: "'sudo yum update'"
     NO_UPDATES_MSG: "'No Packages marked for Update'"
   - distribution: centos
