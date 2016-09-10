@@ -11,10 +11,12 @@ services:
 env:
   - distribution: centos
     version: 7
+    PRE_CMD: setenforce 0
     UPDATE_CMD: "'sudo yum update'"
     NO_UPDATES_MSG: "'No Packages marked for Update'"
   - distribution: centos
     version: 6
+    PRE_CMD: echo unused
     UPDATE_CMD: "'sudo yum update'"
     NO_UPDATES_MSG: "'No Packages marked for Update'"
 # No supported/sane way to run Ansible inside a CentOS 5 Docker container;
@@ -22,18 +24,23 @@ env:
 #     version: 5
   - distribution: ubuntu
     version: 16.04
+    PRE_CMD: echo unused
     UPDATE_CMD: "'sudo apt-get update && sudo apt-get dist-upgrade'"
     NO_UPDATES_MSG: "'0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.'"
   - distribution: ubuntu
     version: 14.04
+    PRE_CMD: echo unused
     UPDATE_CMD: "'sudo apt-get update && sudo apt-get dist-upgrade'"
     NO_UPDATES_MSG: "'0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.'"
   - distribution: ubuntu
     version: 12.04
+    PRE_CMD: echo unused
     UPDATE_CMD: "'sudo apt-get update && sudo apt-get dist-upgrade'"
     NO_UPDATES_MSG: "'0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.'"
 
 before_install:
+  # Disable SELinux in CentOS 7
+  - sudo bash -c ${PRE_CMD}
   - 'sudo docker run -it --name=test_dummy --privileged --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:rw cyverse/ansible-test:latest-${distribution}-${version} bash'
 
 script:
