@@ -11,7 +11,7 @@ services:
 env:
   - distribution: centos
     version: 7
-    PRE_CMD: setenforce 0
+    PRE_CMD: "setenforce 0"
     UPDATE_CMD: "'sudo yum update'"
     NO_UPDATES_MSG: "'No Packages marked for Update'"
   - distribution: centos
@@ -40,7 +40,7 @@ env:
 
 before_install:
   # Disable SELinux in CentOS 7
-  - sudo bash -c ${PRE_CMD}
+  - "sudo bash -c ${PRE_CMD}"
   - 'sudo docker run -it --name=test_dummy --privileged --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:rw cyverse/ansible-test:latest-${distribution}-${version} bash'
 
 script:
