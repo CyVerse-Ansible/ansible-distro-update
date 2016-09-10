@@ -41,7 +41,7 @@ script:
   - sudo docker exec test_dummy ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml -i tests/inventory --syntax-check -vvv
 
   # Run playbook to perform updates
-  - "sudo docker exec test_dummy ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml -i tests/inventory --connection=local"
+  - "sudo docker exec test_dummy ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml -i tests/inventory --connection=local" -vvv
 
   - echo ${UPDATE_CMD}
   - echo ${NO_UPDATES_MSG}
