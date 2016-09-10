@@ -12,7 +12,7 @@ env:
   - distribution: centos
     version: 7
     UPDATE_CMD: "'sudo yum update'"
-    NO_UPDATES_MSG: "'No Packages marked for update'"
+    NO_UPDATES_MSG: "'No packages marked for update'"
   - distribution: centos
     version: 6
     UPDATE_CMD: "'sudo yum update'"
@@ -43,16 +43,9 @@ script:
   # Run playbook to perform updates
   - "sudo docker exec test_dummy ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml -i tests/inventory --connection=local -vvv"
 
-  - "sudo docker exec test_dummy echo ${UPDATE_CMD}"
-  - "sudo docker exec test_dummy echo ${NO_UPDATES_MSG}"
-  - "sudo docker exec test_dummy bash -c \"${UPDATE_CMD}\""
-
   # Run updates manually and confirm that none are applied (i.e. system has been brought up-to-date)
   - "sudo docker exec test_dummy bash -c \"${UPDATE_CMD}\" > output"
   - "sudo chmod a+r output"
-  - "cat output"
-  - "grep -q \"$NO_UPDATES_MSG\" output"
-
   - >
     grep -q "$NO_UPDATES_MSG" output
     && (echo 'Test for no updates needed: pass' && exit 0)
